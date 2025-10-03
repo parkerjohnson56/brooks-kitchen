@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ShoppingCart, Truck, Store, User, Mail, Phone, MapPin, CreditCard, Heart, DollarSign } from 'lucide-react';
+import { ShoppingCart, Truck, Store, User, Mail, Phone, MapPin, CreditCard, Heart, DollarSign, Lock } from 'lucide-react';
 import Link from 'next/link';
 import { sendOrderEmail, OrderData } from '@/lib/emailService';
 import { useCart } from '@/contexts/CartContext';
@@ -279,6 +279,107 @@ function OrderSummary({ cart, deliveryPrice }: { cart: CartItem[], deliveryOptio
   );
 }
 
+// Real Stripe Checkout Component
+function StripeCheckoutButton({ 
+  total, 
+  customerEmail, 
+  customerName,
+  orderItems,
+  onPaymentSuccess 
+}: { 
+  total: number;
+  customerEmail: string;
+  customerName: string;
+  orderItems: any[];
+  onPaymentSuccess: () => void;
+}) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleStripeCheckout = async () => {
+    setIsLoading(true);
+
+    try {
+      // Create Stripe Checkout session
+      const response = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: total,
+          currency: 'usd',
+          customerEmail,
+          customerName,
+          orderItems,
+          successUrl: `${window.location.origin}/checkout?payment=success`,
+          cancelUrl: `${window.location.origin}/checkout?payment=cancelled`
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create checkout session');
+      }
+
+      const { url } = await response.json();
+      
+      // Redirect to Stripe Checkout
+      window.location.href = url;
+
+    } catch (error) {
+      console.error('Stripe checkout error:', error);
+      alert('Payment failed. Please try again.');
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="bg-white rounded-2xl p-6 shadow-lg">
+      <div className="flex items-center space-x-3 mb-6">
+        <div className="bg-green-100 p-2 rounded-full">
+          <Lock className="h-6 w-6 text-green-600" />
+        </div>
+        <h3 className="text-xl font-bold text-brown-900">Secure Payment</h3>
+      </div>
+
+      <div className="space-y-4">
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+          <div className="flex items-center space-x-2 mb-2">
+            <Lock className="h-4 w-4 text-green-600" />
+            <span className="text-sm font-medium text-green-800">Powered by Stripe</span>
+          </div>
+          <p className="text-xs text-green-700">
+            You&apos;ll be redirected to Stripe&apos;s secure checkout page to complete your payment.
+          </p>
+        </div>
+
+        <button
+          onClick={handleStripeCheckout}
+          disabled={isLoading || !customerEmail || !customerName}
+          className="w-full flex items-center justify-center space-x-2 bg-green-600 text-white font-semibold py-4 rounded-full hover:bg-green-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isLoading ? (
+            <>
+              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+              <span>Redirecting to Stripe...</span>
+            </>
+          ) : (
+            <>
+              <CreditCard className="h-5 w-5" />
+              <span>Pay ${total.toFixed(2)} with Stripe</span>
+            </>
+          )}
+        </button>
+
+        {(!customerEmail || !customerName) && (
+          <p className="text-xs text-brown-500 text-center">
+            Please fill out your contact information first
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // Main Checkout Page
 export default function CheckoutPage() {
   const { cart, clearCart } = useCart();
@@ -293,6 +394,34 @@ export default function CheckoutPage() {
     instructions: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+
+  // Check for payment success from URL params
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentStatus = urlParams.get('payment');
+    
+    if (paymentStatus === 'success') {
+      setPaymentSuccess(true);
+      addToast({
+        type: 'success',
+        title: 'Payment Successful!',
+        message: 'Your payment has been processed. You can now submit your order.',
+        duration: 5000
+      });
+      // Clean up URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (paymentStatus === 'cancelled') {
+      addToast({
+        type: 'error',
+        title: 'Payment Cancelled',
+        message: 'Payment was cancelled. You can try again or choose cash payment.',
+        duration: 5000
+      });
+      // Clean up URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, [addToast]);
 
   const deliveryPrices = {
     delivery: 5,
@@ -522,27 +651,48 @@ export default function CheckoutPage() {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 className="text-center"
               >
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="inline-flex items-center justify-center px-12 py-4 bg-pink-600 text-white font-semibold rounded-full hover:bg-pink-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed group"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
-                      {paymentOption === PAYMENT_OPTIONS.PREPAY ? 'Processing Payment...' : 'Processing Order...'}
-                    </>
-                  ) : (
-                    <>
-                      {paymentOption === PAYMENT_OPTIONS.PREPAY ? (
-                        <CreditCard className="h-5 w-5 mr-3 group-hover:scale-110 transition-transform duration-200" />
+                {paymentOption === PAYMENT_OPTIONS.PREPAY ? (
+                  <div className="space-y-4">
+                    <p className="text-sm text-brown-600">
+                      Complete your payment on the right, then click below to submit your order.
+                    </p>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting || !paymentSuccess}
+                      className="inline-flex items-center justify-center px-12 py-4 bg-pink-600 text-white font-semibold rounded-full hover:bg-pink-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed group"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
+                          Submitting Order...
+                        </>
                       ) : (
-                        <DollarSign className="h-5 w-5 mr-3 group-hover:scale-110 transition-transform duration-200" />
+                        <>
+                          <CreditCard className="h-5 w-5 mr-3 group-hover:scale-110 transition-transform duration-200" />
+                          {paymentSuccess ? 'Submit Order' : 'Complete Payment First'}
+                        </>
                       )}
-                      {paymentOption === PAYMENT_OPTIONS.PREPAY ? 'Pay & Place Order' : 'Place Order (Pay Later)'}
-                    </>
-                  )}
-                </button>
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="inline-flex items-center justify-center px-12 py-4 bg-pink-600 text-white font-semibold rounded-full hover:bg-pink-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed group"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
+                        Processing Order...
+                      </>
+                    ) : (
+                      <>
+                        <DollarSign className="h-5 w-5 mr-3 group-hover:scale-110 transition-transform duration-200" />
+                        Place Order (Pay Later)
+                      </>
+                    )}
+                  </button>
+                )}
                 <p className="text-sm text-brown-600 mt-4">
                   Made with <Heart className="inline h-4 w-4 text-pink-600" /> by Brook
                 </p>
@@ -550,18 +700,49 @@ export default function CheckoutPage() {
             </form>
           </div>
 
-          {/* Order Summary Sidebar */}
+          {/* Order Summary and Payment Form Sidebar */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="lg:col-span-1"
+            className="lg:col-span-1 space-y-6"
           >
+            {/* Order Summary - Always shown */}
             <OrderSummary
               cart={cart}
               deliveryOption={deliveryOption}
               deliveryPrice={deliveryPrices[deliveryOption as keyof typeof deliveryPrices]}
             />
+
+            {/* Payment Form - Only shown when prepay is selected */}
+            {paymentOption === PAYMENT_OPTIONS.PREPAY && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                <StripeCheckoutButton
+                  total={cart.reduce((total, item) => total + (item.price * item.quantity), 0) + deliveryPrices[deliveryOption as keyof typeof deliveryPrices]}
+                  customerEmail={formData.email}
+                  customerName={formData.name}
+                  orderItems={cart.map(item => ({
+                    name: item.name,
+                    quantity: item.quantity,
+                    price: item.price,
+                    packSize: item.packSize
+                  }))}
+                  onPaymentSuccess={() => {
+                    setPaymentSuccess(true);
+                    addToast({
+                      type: 'success',
+                      title: 'Payment Successful!',
+                      message: 'Your payment has been processed. Order will be submitted.',
+                      duration: 3000
+                    });
+                  }}
+                />
+              </motion.div>
+            )}
           </motion.div>
         </div>
       </div>
