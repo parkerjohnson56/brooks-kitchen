@@ -238,7 +238,7 @@ interface CartItem {
   packSize: string;
 }
 
-function OrderSummary({ cart, deliveryPrice }: { cart: CartItem[], deliveryOption: string, deliveryPrice: number }) {
+function OrderSummary({ cart, deliveryPrice }: { cart: CartItem[], deliveryPrice: number }) {
   const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
   const total = subtotal + deliveryPrice;
 
@@ -290,7 +290,7 @@ function StripeCheckoutButton({
   total: number;
   customerEmail: string;
   customerName: string;
-  orderItems: any[];
+  orderItems: { name: string; quantity: number; price: number; packSize: string }[];
   onPaymentSuccess: () => void;
 }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -482,6 +482,7 @@ export default function CheckoutPage() {
           }
 
           const { clientSecret } = await response.json();
+          console.log('Payment intent created:', clientSecret);
           
           // For now, we'll simulate successful payment and proceed with order
           // In a full implementation, you'd use Stripe Elements to collect payment
@@ -710,7 +711,6 @@ export default function CheckoutPage() {
             {/* Order Summary - Always shown */}
             <OrderSummary
               cart={cart}
-              deliveryOption={deliveryOption}
               deliveryPrice={deliveryPrices[deliveryOption as keyof typeof deliveryPrices]}
             />
 
