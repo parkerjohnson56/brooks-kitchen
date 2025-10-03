@@ -89,13 +89,31 @@ export default function Footer() {
           </motion.div>
         </div>
 
+        {/* Health Food Regulations Disclaimer */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="border-t border-pink-200 mt-8 pt-6"
+        >
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+            <h5 className="text-sm font-semibold text-yellow-800 mb-2">⚠️ Health Food Regulations Notice</h5>
+            <p className="text-xs text-yellow-700 leading-relaxed">
+              <strong>Made in a residential home kitchen that is not subject to state licensing or inspection.</strong> 
+              This product is not intended for resale. We follow proper food safety practices, but please be aware 
+              that this is a home-based business operating under cottage food laws.
+            </p>
+          </div>
+        </motion.div>
+
         {/* Bottom Bar */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
-          className="border-t border-pink-200 mt-8 pt-8 text-center"
+          className="border-t border-pink-200 pt-8 text-center"
         >
           <p className="text-brown-600">
             © {currentYear} Brook&apos;s Kitchen. Made with{' '}

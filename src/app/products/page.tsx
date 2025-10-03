@@ -173,6 +173,21 @@ export default function ProductsPage() {
               and we&apos;ll do our best to accommodate your request. We love creating custom treats!
             </p>
           </motion.div>
+
+          {/* Health Food Regulations Notice */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 max-w-4xl mx-auto"
+          >
+            <h3 className="text-lg font-semibold text-yellow-800 mb-2">⚠️ Health Food Regulations Notice</h3>
+            <p className="text-sm text-yellow-700 leading-relaxed">
+              <strong>Made in a residential home kitchen that is not subject to state licensing or inspection.</strong> 
+              This product is not intended for resale. We follow proper food safety practices, but please be aware 
+              that this is a home-based business operating under cottage food laws.
+            </p>
+          </motion.div>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

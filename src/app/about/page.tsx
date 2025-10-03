@@ -230,6 +230,28 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Health Food Regulations Notice */}
+      <section className="py-12 bg-yellow-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <div className="bg-white border border-yellow-200 rounded-2xl p-8 shadow-lg">
+              <h2 className="text-2xl font-bold text-yellow-800 mb-4">⚠️ Health Food Regulations Notice</h2>
+              <p className="text-yellow-700 leading-relaxed max-w-3xl mx-auto">
+                <strong>Made in a residential home kitchen that is not subject to state licensing or inspection.</strong> 
+                This product is not intended for resale. We follow proper food safety practices, but please be aware 
+                that this is a home-based business operating under cottage food laws.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20 bg-pink-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

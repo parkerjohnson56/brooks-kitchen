@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
+import Stripe from 'stripe';
 
-// This is a placeholder API route for Stripe payment intents
-// You'll need to install Stripe and set up your secret key
+// Initialize Stripe with your secret key
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2024-12-18.acacia',
+});
 
 export async function POST(request: NextRequest) {
   try {
@@ -10,28 +13,29 @@ export async function POST(request: NextRequest) {
     // Log the received data for debugging
     console.log('Payment intent request:', { amount, currency, customerEmail, customerName, orderItems });
 
-    // For now, we'll simulate a successful payment intent creation
-    // In production, you would:
-    // 1. Import Stripe: import Stripe from 'stripe';
-    // 2. Initialize: const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-    // 3. Create payment intent:
-    //    const paymentIntent = await stripe.paymentIntents.create({
-    //      amount: amount, // in cents
-    //      currency: currency,
-    //      metadata: {
-    //        customerEmail,
-    //        customerName,
-    //        orderItems: JSON.stringify(orderItems)
-    //      }
-    //    });
-    // 4. Return: { clientSecret: paymentIntent.client_secret }
+    // Validate required fields
+    if (!amount || !customerEmail || !customerName) {
+      return NextResponse.json(
+        { error: 'Missing required fields: amount, customerEmail, customerName' },
+        { status: 400 }
+      );
+    }
 
-    // Simulated response for now
-    const clientSecret = `pi_simulated_${Date.now()}_secret_${Math.random().toString(36).substr(2, 9)}`;
+    // Create Stripe payment intent
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: Math.round(amount * 100), // Convert to cents
+      currency: currency || 'usd',
+      metadata: {
+        customerEmail,
+        customerName,
+        orderItems: JSON.stringify(orderItems)
+      },
+      receipt_email: customerEmail,
+    });
 
     return NextResponse.json({ 
-      clientSecret,
-      message: 'Payment intent created successfully (simulated)'
+      clientSecret: paymentIntent.client_secret,
+      message: 'Payment intent created successfully'
     });
 
   } catch (error) {
