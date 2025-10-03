@@ -46,7 +46,7 @@ function DeliveryOptions({ selectedOption, onSelect }: { selectedOption: string,
                 ? 'border-pink-600 bg-pink-50'
                 : 'border-pink-200 hover:border-pink-300'
             }`}
-            onClick={() => onSelect(option.id)}
+            onClick={() => onSelect(option.id as PaymentOption)}
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
@@ -79,7 +79,7 @@ function DeliveryOptions({ selectedOption, onSelect }: { selectedOption: string,
 }
 
 // Payment Options Component
-function PaymentOptions({ selectedOption, onSelect }: { selectedOption: string, onSelect: (option: string) => void }) {
+function PaymentOptions({ selectedOption, onSelect }: { selectedOption: PaymentOption, onSelect: (option: PaymentOption) => void }) {
   const options = [
     {
       id: PAYMENT_OPTIONS.PREPAY,
@@ -112,7 +112,7 @@ function PaymentOptions({ selectedOption, onSelect }: { selectedOption: string, 
                 ? 'border-pink-600 bg-pink-50'
                 : 'border-pink-200 hover:border-pink-300'
             }`}
-            onClick={() => onSelect(option.id)}
+            onClick={() => onSelect(option.id as PaymentOption)}
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
@@ -138,7 +138,15 @@ function PaymentOptions({ selectedOption, onSelect }: { selectedOption: string, 
 }
 
 // Contact Form Component
-function ContactForm({ formData, onUpdate }: { formData: any, onUpdate: (field: string, value: string) => void }) {
+interface FormData {
+  name: string;
+  phone: string;
+  email: string;
+  address: string;
+  instructions: string;
+}
+
+function ContactForm({ formData, onUpdate }: { formData: FormData, onUpdate: (field: string, value: string) => void }) {
   return (
     <div className="space-y-6">
       <h3 className="text-lg font-semibold text-brown-900 mb-4">Contact Information</h3>
@@ -222,7 +230,15 @@ function ContactForm({ formData, onUpdate }: { formData: any, onUpdate: (field: 
 }
 
 // Order Summary Component
-function OrderSummary({ cart, deliveryOption, deliveryPrice }: { cart: any[], deliveryOption: string, deliveryPrice: number }) {
+interface CartItem {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  packSize: string;
+}
+
+function OrderSummary({ cart, deliveryPrice }: { cart: CartItem[], deliveryOption: string, deliveryPrice: number }) {
   const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
   const total = subtotal + deliveryPrice;
 
@@ -386,7 +402,7 @@ export default function CheckoutPage() {
             Checkout
           </h1>
           <p className="text-xl text-brown-600 max-w-2xl mx-auto">
-            Complete your order and we'll get started on your delicious treats
+            Complete your order and we&apos;ll get started on your delicious treats
           </p>
         </motion.div>
 

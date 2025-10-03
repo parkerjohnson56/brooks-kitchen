@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ShoppingCart, Plus, Minus, Heart } from 'lucide-react';
-import Link from 'next/link';
 import Image from 'next/image';
 import { useCart } from '@/contexts/CartContext';
 import { useToast } from '@/components/Toast';
@@ -170,8 +169,8 @@ export default function ProductsPage() {
           >
             <h3 className="text-lg font-semibold text-brown-900 mb-2">Want a Different Flavor?</h3>
             <p className="text-brown-600">
-              Don't see your favorite flavor? No problem! Just add a note in your order message 
-              and we'll do our best to accommodate your request. We love creating custom treats!
+              Don&apos;t see your favorite flavor? No problem! Just add a note in your order message 
+              and we&apos;ll do our best to accommodate your request. We love creating custom treats!
             </p>
           </motion.div>
         </motion.div>

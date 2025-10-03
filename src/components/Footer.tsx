@@ -22,7 +22,7 @@ export default function Footer() {
               <div className="bg-pink-100 p-2 rounded-full">
                 <Heart className="h-6 w-6 text-pink-600" />
               </div>
-              <h3 className="text-xl font-bold text-brown-900">Brook's Kitchen</h3>
+              <h3 className="text-xl font-bold text-brown-900">Brook&apos;s Kitchen</h3>
             </div>
             <p className="text-brown-600 leading-relaxed">
               Handmade baked goods made with love and the finest ingredients. 
@@ -98,7 +98,7 @@ export default function Footer() {
           className="border-t border-pink-200 mt-8 pt-8 text-center"
         >
           <p className="text-brown-600">
-            © {currentYear} Brook's Kitchen. Made with{' '}
+            © {currentYear} Brook&apos;s Kitchen. Made with{' '}
             <Heart className="inline h-4 w-4 text-pink-600" /> and love.
           </p>
           <p className="mt-2 text-xs text-brown-500">

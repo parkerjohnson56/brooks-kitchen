@@ -10,7 +10,16 @@ import { useToast } from '@/components/Toast';
 import { useState } from 'react';
 
 // Product Card Component for Homepage
-function ProductCard({ product }: { product: any }) {
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  description: string;
+  image: string;
+  packSize: string;
+}
+
+function ProductCard({ product }: { product: Product }) {
   const { addToCart } = useCart();
   const { addToast } = useToast();
   const [quantity, setQuantity] = useState(1);
@@ -212,7 +221,7 @@ export default function Home() {
             className="text-center space-y-8"
           >
             <h2 className="text-3xl lg:text-4xl font-bold text-brown-900">
-              About Brook's Kitchen
+              About Brook&apos;s Kitchen
             </h2>
             <p className="text-xl text-brown-600 max-w-3xl mx-auto leading-relaxed">
               Dog lover, pilot, and sugar artist creating delicious baked goods that bring 

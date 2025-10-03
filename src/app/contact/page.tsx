@@ -56,7 +56,7 @@ export default function ContactPage() {
             </h1>
             <p className="text-xl text-brown-600 max-w-3xl mx-auto leading-relaxed">
               Have a question about our treats? Need catering or bulk orders? 
-              Or just want to say hello? I'd love to hear from you!
+              Or just want to say hello? I&apos;d love to hear from you!
             </p>
             
             {/* Important Notice */}
@@ -200,8 +200,8 @@ export default function ContactPage() {
             <div>
               <h2 className="text-2xl font-bold text-brown-900 mb-6">Contact Information</h2>
               <p className="text-brown-600 leading-relaxed mb-8">
-                I'm here to help with any questions you might have about our delicious treats. 
-                Don't hesitate to reach out - I love hearing from customers!
+                I&apos;m here to help with any questions you might have about our delicious treats. 
+                Don&apos;t hesitate to reach out - I love hearing from customers!
               </p>
             </div>
 
@@ -216,7 +216,7 @@ export default function ContactPage() {
                 <div>
                   <h3 className="font-semibold text-brown-900">Email</h3>
                   <p className="text-brown-600">brooklynnepley@gmail.com</p>
-                  <p className="text-sm text-brown-500">I'll respond within 24 hours</p>
+                  <p className="text-sm text-brown-500">I&apos;ll respond within 24 hours</p>
                 </div>
               </motion.div>
 
@@ -273,7 +273,7 @@ export default function ContactPage() {
               <h3 className="font-semibold text-brown-900 mb-2">Made with Love</h3>
               <p className="text-brown-600 text-sm">
                 Every treat is crafted with care and attention to detail. 
-                I can't wait to share the love with you!
+                I can&apos;t wait to share the love with you!
               </p>
             </motion.div>
           </motion.div>

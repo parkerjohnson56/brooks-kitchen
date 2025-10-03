@@ -6,6 +6,9 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
   try {
     const { amount, currency, customerEmail, customerName, orderItems } = await request.json();
+    
+    // Log the received data for debugging
+    console.log('Payment intent request:', { amount, currency, customerEmail, customerName, orderItems });
 
     // For now, we'll simulate a successful payment intent creation
     // In production, you would:

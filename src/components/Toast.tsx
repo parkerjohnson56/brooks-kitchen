@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, XCircle, ShoppingCart, X } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import React from 'react';
 
 export interface ToastProps {

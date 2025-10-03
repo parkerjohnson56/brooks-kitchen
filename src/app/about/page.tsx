@@ -17,7 +17,7 @@ export default function AboutPage() {
             className="text-center space-y-8"
           >
             <h1 className="text-4xl lg:text-6xl font-bold text-brown-900">
-              About Brook's Kitchen
+              About Brook&apos;s Kitchen
             </h1>
             <p className="text-xl text-brown-600 max-w-3xl mx-auto leading-relaxed">
               Dog lover, pilot, and sugar artist creating delicious baked goods that bring 
@@ -44,18 +44,18 @@ export default function AboutPage() {
               </h2>
               <div className="space-y-4 text-brown-600 leading-relaxed">
                 <p>
-                  Hi, I'm Brook! I'm a dog lover, pilot, and sugar artist who discovered my passion 
+                  Hi, I&apos;m Brook! I&apos;m a dog lover, pilot, and sugar artist who discovered my passion 
                   for baking during my travels. What started as a hobby to bring comfort to friends 
                   and family has grown into something truly special.
                 </p>
                 <p>
-                  When I'm not flying high in the sky or spending time with my furry friends, 
-                  you'll find me in the kitchen creating delicious treats. Each recipe is crafted 
+                  When I&apos;m not flying high in the sky or spending time with my furry friends, 
+                  you&apos;ll find me in the kitchen creating delicious treats. Each recipe is crafted 
                   with love, using only the finest ingredients and traditional techniques passed 
                   down through generations.
                 </p>
                 <p>
-                  My goal is simple: to bring joy to your day with every bite. Whether it's a 
+                  My goal is simple: to bring joy to your day with every bite. Whether it&apos;s a 
                   warm cinnamon roll on a chilly morning or a fresh blueberry muffin for your 
                   afternoon coffee, I want each treat to feel like a hug from home.
                 </p>
@@ -74,7 +74,7 @@ export default function AboutPage() {
                   <div className="aspect-square bg-pink-50 rounded-xl overflow-hidden">
                     <Image
                       src="/images/about.JPG"
-                      alt="Brook - Owner of Brook's Kitchen"
+                      alt="Brook - Owner of Brook&apos;s Kitchen"
                       width={400}
                       height={400}
                       className="w-full h-full object-cover"
@@ -206,7 +206,7 @@ export default function AboutPage() {
                 <Plane className="h-12 w-12 text-pink-600 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-brown-900 mb-2">Pilot</h3>
                 <p className="text-brown-600 text-sm">
-                  When I'm not in the kitchen, you'll find me soaring through the skies, 
+                  When I&apos;m not in the kitchen, you&apos;ll find me soaring through the skies, 
                   bringing the same precision and care to flying as I do to baking.
                 </p>
               </motion.div>

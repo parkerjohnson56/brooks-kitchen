@@ -59,6 +59,7 @@ export const createPaymentIntent = async (paymentData: PaymentData) => {
 export const processCashPayment = async (paymentData: PaymentData) => {
   // For cash payments, we just need to confirm the order
   // The actual payment happens when Brook delivers/picks up
+  console.log('Processing cash payment for:', paymentData.customerName);
   return {
     success: true,
     paymentMethod: 'cash',

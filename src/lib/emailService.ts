@@ -179,8 +179,24 @@ Handmade with love and the finest ingredients`,
   }
 };
 
+interface ReceiptContent {
+  customerEmail: string;
+  subject: string;
+  body: string;
+  customerName: string;
+  orderNumber: string;
+  orderItems: string;
+  deliveryOption: string;
+  specialInstructions: string;
+  subtotal: string;
+  deliveryFee: string;
+  total: string;
+  orderDate: string;
+  orderTime: string;
+}
+
 // Function to show customer receipt modal
-const showCustomerReceiptModal = (receiptContent: any) => {
+const showCustomerReceiptModal = (receiptContent: ReceiptContent) => {
   const modal = document.createElement('div');
   modal.style.cssText = `
     position: fixed;
