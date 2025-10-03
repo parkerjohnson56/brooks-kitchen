@@ -50,15 +50,16 @@ function ProductCard({ product }: { product: Product }) {
       viewport={{ once: true }}
       className="bg-white rounded-2xl p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 h-full flex flex-col"
     >
-      <div className="w-64 h-64 mb-4 mx-auto">
+      <div className="relative w-full mb-4 mx-auto rounded-xl overflow-hidden" style={{ aspectRatio: '1/1', minHeight: '300px' }}>
         <Image
           src={product.image}
           alt={product.name}
-          width={256}
-          height={256}
-          className="w-full h-full object-cover rounded-xl"
+          fill
+          className="object-cover"
           style={{ 
-            objectPosition: 'center'
+            objectFit: 'cover',
+            objectPosition: 'center',
+            transform: 'scale(1.1)'
           }}
         />
       </div>
@@ -115,7 +116,7 @@ export default function ProductsPage() {
       name: 'Blueberry Muffins',
       price: 12,
       description: 'Fresh, fluffy muffins bursting with juicy blueberries. Perfect for breakfast or a sweet afternoon treat.',
-      image: '/images/muffin.png',
+      image: '/images/product pics/blueberry.png',
       packSize: '4 per pack'
     },
     {
@@ -123,7 +124,7 @@ export default function ProductsPage() {
       name: 'Cinnamon Rolls',
       price: 15,
       description: 'Warm, gooey cinnamon rolls with cream cheese frosting. A classic favorite that never disappoints.',
-      image: '/images/cinnamon.png',
+      image: '/images/product pics/cinna.png',
       packSize: '4 per pack'
     },
     {
@@ -131,7 +132,7 @@ export default function ProductsPage() {
       name: 'Pumpkin Cinnamon Rolls',
       price: 16,
       description: 'Seasonal favorite with pumpkin spice and warm cinnamon. Perfect for fall and winter months.',
-      image: '/images/pumpkin.png',
+      image: '/images/product pics/pumpkin.png',
       packSize: '4 per pack'
     },
     {
@@ -139,7 +140,7 @@ export default function ProductsPage() {
       name: 'Blueberry Scones',
       price: 14,
       description: 'Buttery, crumbly scones with fresh blueberries. Great with tea or coffee.',
-      image: '/images/scones.png',
+      image: '/images/product pics/scone.png',
       packSize: '4 per pack'
     }
   ];
