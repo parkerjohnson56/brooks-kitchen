@@ -645,17 +645,110 @@ export default function CheckoutPage() {
                 />
               </motion.div>
 
+              {/* Payment Section - Only shown when prepay is selected */}
+              {paymentOption === PAYMENT_OPTIONS.PREPAY && (
+                <motion.div
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  className="bg-white rounded-2xl p-6 shadow-lg"
+                >
+                  <div className="flex items-center space-x-3 mb-6">
+                    <div className="bg-green-100 p-2 rounded-full">
+                      <Lock className="h-6 w-6 text-green-600" />
+                    </div>
+                    <h3 className="text-xl font-bold text-brown-900">Secure Payment</h3>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <Lock className="h-4 w-4 text-green-600" />
+                        <span className="text-sm font-medium text-green-800">Powered by Stripe</span>
+                      </div>
+                      <p className="text-xs text-green-700">
+                        You&apos;ll be redirected to Stripe&apos;s secure checkout page to complete your payment.
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        if (!formData.email || !formData.name) {
+                          addToast({
+                            type: 'error',
+                            title: 'Missing Information',
+                            message: 'Please fill out your name and email address first.',
+                            duration: 3000
+                          });
+                          return;
+                        }
+
+                        try {
+                          const response = await fetch('/api/create-checkout-session', {
+                            method: 'POST',
+                            headers: {
+                              'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                              amount: cart.reduce((total, item) => total + (item.price * item.quantity), 0) + deliveryPrices[deliveryOption as keyof typeof deliveryPrices],
+                              currency: 'usd',
+                              customerEmail: formData.email,
+                              customerName: formData.name,
+                              orderItems: cart.map(item => ({
+                                name: item.name,
+                                quantity: item.quantity,
+                                price: item.price,
+                                packSize: item.packSize
+                              })),
+                              successUrl: `${window.location.origin}/checkout?payment=success`,
+                              cancelUrl: `${window.location.origin}/checkout?payment=cancelled`
+                            }),
+                          });
+
+                          if (!response.ok) {
+                            throw new Error('Failed to create checkout session');
+                          }
+
+                          const { url } = await response.json();
+                          window.location.href = url;
+                        } catch (error) {
+                          console.error('Stripe checkout error:', error);
+                          addToast({
+                            type: 'error',
+                            title: 'Payment Error',
+                            message: 'Failed to process payment. Please try again.',
+                            duration: 3000
+                          });
+                        }
+                      }}
+                      disabled={!formData.email || !formData.name}
+                      className="w-full flex items-center justify-center space-x-2 bg-green-600 text-white font-semibold py-4 rounded-full hover:bg-green-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <CreditCard className="h-5 w-5" />
+                      <span>Pay ${(cart.reduce((total, item) => total + (item.price * item.quantity), 0) + deliveryPrices[deliveryOption as keyof typeof deliveryPrices]).toFixed(2)} with Stripe</span>
+                    </button>
+
+                    {(!formData.email || !formData.name) && (
+                      <p className="text-xs text-brown-500 text-center">
+                        ⚠️ Please fill out your contact information above first
+                      </p>
+                    )}
+                  </div>
+                </motion.div>
+              )}
+
               {/* Submit Button */}
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
                 className="text-center"
               >
                 {paymentOption === PAYMENT_OPTIONS.PREPAY ? (
                   <div className="space-y-4">
                     <p className="text-sm text-brown-600">
-                      Complete your payment on the right, then click below to submit your order.
+                      Complete your payment above, then click below to submit your order.
                     </p>
                     <button
                       type="submit"
@@ -701,7 +794,7 @@ export default function CheckoutPage() {
             </form>
           </div>
 
-          {/* Order Summary and Payment Form Sidebar */}
+          {/* Order Summary Sidebar */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -713,36 +806,6 @@ export default function CheckoutPage() {
               cart={cart}
               deliveryPrice={deliveryPrices[deliveryOption as keyof typeof deliveryPrices]}
             />
-
-            {/* Payment Form - Only shown when prepay is selected */}
-            {paymentOption === PAYMENT_OPTIONS.PREPAY && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-              >
-                <StripeCheckoutButton
-                  total={cart.reduce((total, item) => total + (item.price * item.quantity), 0) + deliveryPrices[deliveryOption as keyof typeof deliveryPrices]}
-                  customerEmail={formData.email}
-                  customerName={formData.name}
-                  orderItems={cart.map(item => ({
-                    name: item.name,
-                    quantity: item.quantity,
-                    price: item.price,
-                    packSize: item.packSize
-                  }))}
-                  onPaymentSuccess={() => {
-                    setPaymentSuccess(true);
-                    addToast({
-                      type: 'success',
-                      title: 'Payment Successful!',
-                      message: 'Your payment has been processed. Order will be submitted.',
-                      duration: 3000
-                    });
-                  }}
-                />
-              </motion.div>
-            )}
           </motion.div>
         </div>
       </div>

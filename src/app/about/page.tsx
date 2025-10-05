@@ -106,19 +106,19 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-3 gap-4 md:gap-8">
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
                 viewport={{ once: true }}
-                className="text-center space-y-4"
+                className="text-center space-y-2 md:space-y-4"
               >
-                <div className="bg-pink-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
-                  <Heart className="h-8 w-8 text-pink-600" />
+                <div className="bg-pink-100 w-10 h-10 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto">
+                  <Heart className="h-5 w-5 md:h-8 md:w-8 text-pink-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-brown-900">Made with Love</h3>
-                <p className="text-brown-600">
+                <h3 className="text-sm md:text-xl font-semibold text-brown-900">Made with Love</h3>
+                <p className="text-xs md:text-base text-brown-600">
                   Every batch is crafted with care and attention to detail. 
                   I believe that love is the secret ingredient that makes everything taste better.
                 </p>
@@ -129,13 +129,13 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
                 viewport={{ once: true }}
-                className="text-center space-y-4"
+                className="text-center space-y-2 md:space-y-4"
               >
-                <div className="bg-pink-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
-                  <Star className="h-8 w-8 text-pink-600" />
+                <div className="bg-pink-100 w-10 h-10 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto">
+                  <Star className="h-5 w-5 md:h-8 md:w-8 text-pink-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-brown-900">Premium Quality</h3>
-                <p className="text-brown-600">
+                <h3 className="text-sm md:text-xl font-semibold text-brown-900">Premium Quality</h3>
+                <p className="text-xs md:text-base text-brown-600">
                   Only the finest ingredients make it into my kitchen. 
                   I source locally when possible and never compromise on quality.
                 </p>
@@ -146,13 +146,13 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
                 viewport={{ once: true }}
-                className="text-center space-y-4"
+                className="text-center space-y-2 md:space-y-4"
               >
-                <div className="bg-pink-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
-                  <Clock className="h-8 w-8 text-pink-600" />
+                <div className="bg-pink-100 w-10 h-10 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto">
+                  <Clock className="h-5 w-5 md:h-8 md:w-8 text-pink-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-brown-900">Fresh Daily</h3>
-                <p className="text-brown-600">
+                <h3 className="text-sm md:text-xl font-semibold text-brown-900">Fresh Daily</h3>
+                <p className="text-xs md:text-base text-brown-600">
                   Everything is baked fresh to order with a 3-day lead time. 
                   No preservatives, no shortcuts, just pure deliciousness.
                 </p>

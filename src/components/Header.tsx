@@ -41,7 +41,7 @@ export default function Header() {
         </div>
 
         {/* Navigation - Underneath logo */}
-        <div className="flex justify-between items-center py-2">
+        <div className="flex justify-end items-center py-2">
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-24 flex-1 justify-center">
             {navItems.map((item, index) => (
@@ -61,32 +61,35 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Cart */}
-          <motion.button
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            onClick={() => setIsCartOpen(true)}
-            className="relative p-2 text-brown-700 hover:text-pink-600 transition-colors duration-200"
-          >
-            <ShoppingCart className="h-6 w-6" />
-            {getTotalItems() > 0 && (
-              <span className="absolute -top-1 -right-1 bg-pink-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                {getTotalItems()}
-              </span>
-            )}
-          </motion.button>
+          {/* Mobile: Cart + Menu Button (grouped together on right) */}
+          <div className="flex items-center space-x-2">
+            {/* Cart */}
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              onClick={() => setIsCartOpen(true)}
+              className="relative p-2 text-brown-700 hover:text-pink-600 transition-colors duration-200"
+            >
+              <ShoppingCart className="h-6 w-6" />
+              {getTotalItems() > 0 && (
+                <span className="absolute -top-1 -right-1 bg-pink-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  {getTotalItems()}
+                </span>
+              )}
+            </motion.button>
 
-          {/* Mobile Menu Button */}
-          <motion.button
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="md:hidden p-2 text-brown-700 hover:text-pink-600 transition-colors duration-200"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </motion.button>
+            {/* Mobile Menu Button */}
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="md:hidden p-2 text-brown-700 hover:text-pink-600 transition-colors duration-200"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </motion.button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}

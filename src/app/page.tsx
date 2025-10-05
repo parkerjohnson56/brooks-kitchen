@@ -169,18 +169,18 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="flex flex-col sm:flex-row gap-6 justify-center"
+              className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center px-4 sm:px-0"
             >
               <Link
                 href="/products"
-                className="inline-flex items-center justify-center px-10 py-5 bg-pink-600 text-white font-semibold text-lg rounded-full hover:bg-pink-700 transition-colors duration-200 group shadow-lg"
+                className="inline-flex items-center justify-center px-6 py-3 sm:px-10 sm:py-5 bg-pink-600 text-white font-semibold text-base sm:text-lg rounded-full hover:bg-pink-700 transition-colors duration-200 group shadow-lg"
               >
                 Order Now
-                <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform duration-200" />
+                <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-1 transition-transform duration-200" />
               </Link>
               <Link
                 href="/about"
-                className="inline-flex items-center justify-center px-10 py-5 border-2 border-pink-600 text-pink-600 font-semibold text-lg rounded-full hover:bg-pink-600 hover:text-white transition-colors duration-200 shadow-lg"
+                className="inline-flex items-center justify-center px-6 py-3 sm:px-10 sm:py-5 border-2 border-pink-600 text-pink-600 font-semibold text-base sm:text-lg rounded-full hover:bg-pink-600 hover:text-white transition-colors duration-200 shadow-lg"
               >
                 Learn More
               </Link>
@@ -191,19 +191,19 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-12 text-brown-600"
+              className="flex flex-row items-center justify-center space-x-4 md:space-x-12 text-brown-600"
             >
-              <div className="flex items-center space-x-3">
-                <Clock className="h-6 w-6 text-pink-600" />
-                <span className="text-lg font-medium">3 day lead time</span>
+              <div className="flex flex-col items-center space-y-2 md:flex-row md:space-y-0 md:space-x-3">
+                <Clock className="h-5 w-5 md:h-6 md:w-6 text-pink-600" />
+                <span className="text-sm md:text-lg font-medium">3 day lead time</span>
               </div>
-              <div className="flex items-center space-x-3">
-                <Heart className="h-6 w-6 text-pink-600" />
-                <span className="text-lg font-medium">Made with love</span>
+              <div className="flex flex-col items-center space-y-2 md:flex-row md:space-y-0 md:space-x-3">
+                <Heart className="h-5 w-5 md:h-6 md:w-6 text-pink-600" />
+                <span className="text-sm md:text-lg font-medium">Made with love</span>
               </div>
-              <div className="flex items-center space-x-3">
-                <Star className="h-6 w-6 text-pink-600" />
-                <span className="text-lg font-medium">Premium quality</span>
+              <div className="flex flex-col items-center space-y-2 md:flex-row md:space-y-0 md:space-x-3">
+                <Star className="h-5 w-5 md:h-6 md:w-6 text-pink-600" />
+                <span className="text-sm md:text-lg font-medium">Premium quality</span>
               </div>
             </motion.div>
 
@@ -229,27 +229,27 @@ export default function Home() {
               warmth and joy to your home. Every treat is handmade with the finest ingredients 
               and a whole lot of love.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-              <div className="text-center space-y-4">
-                <div className="bg-pink-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
-                  <Heart className="h-8 w-8 text-pink-600" />
+            <div className="grid grid-cols-3 gap-4 md:gap-8 mt-12">
+              <div className="text-center space-y-2 md:space-y-4">
+                <div className="bg-pink-100 w-10 h-10 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto">
+                  <Heart className="h-5 w-5 md:h-8 md:w-8 text-pink-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-brown-900">Made with Love</h3>
-                <p className="text-brown-600">Every batch is crafted with care and attention to detail</p>
+                <h3 className="text-sm md:text-xl font-semibold text-brown-900">Made with Love</h3>
+                <p className="text-xs md:text-base text-brown-600">Every batch is crafted with care and attention to detail</p>
               </div>
-              <div className="text-center space-y-4">
-                <div className="bg-pink-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
-                  <Clock className="h-8 w-8 text-pink-600" />
+              <div className="text-center space-y-2 md:space-y-4">
+                <div className="bg-pink-100 w-10 h-10 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto">
+                  <Clock className="h-5 w-5 md:h-8 md:w-8 text-pink-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-brown-900">Fresh Daily</h3>
-                <p className="text-brown-600">Baked fresh to order with a 3-day lead time</p>
+                <h3 className="text-sm md:text-xl font-semibold text-brown-900">Fresh Daily</h3>
+                <p className="text-xs md:text-base text-brown-600">Baked fresh to order with a 3-day lead time</p>
               </div>
-              <div className="text-center space-y-4">
-                <div className="bg-pink-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
-                  <Star className="h-8 w-8 text-pink-600" />
+              <div className="text-center space-y-2 md:space-y-4">
+                <div className="bg-pink-100 w-10 h-10 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto">
+                  <Star className="h-5 w-5 md:h-8 md:w-8 text-pink-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-brown-900">Premium Quality</h3>
-                <p className="text-brown-600">Only the finest ingredients make it into our kitchen</p>
+                <h3 className="text-sm md:text-xl font-semibold text-brown-900">Premium Quality</h3>
+                <p className="text-xs md:text-base text-brown-600">Only the finest ingredients make it into our kitchen</p>
               </div>
             </div>
           </motion.div>
